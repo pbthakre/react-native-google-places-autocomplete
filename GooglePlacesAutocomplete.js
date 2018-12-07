@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import Qs from 'qs';
 import debounce from 'lodash.debounce';
+import { pin_icon } from '../../constants/images';
 
 const WINDOW = Dimensions.get('window');
 
@@ -274,7 +275,7 @@ export default class GooglePlacesAutocomplete extends Component {
               'google places autocomplete: request could not be completed or has been aborted'
             );
           } else {
-            this.props.onFail('request could not be completed or has been aborted');
+            this.props.onFail();
           }
         }
       };
@@ -411,11 +412,7 @@ export default class GooglePlacesAutocomplete extends Component {
             }
           }
           if (typeof responseJSON.error_message !== 'undefined') {
-              if(!this.props.onFail)
-                console.warn('google places autocomplete: ' + responseJSON.error_message);
-              else{
-                this.props.onFail(responseJSON.error_message)
-              }
+            console.warn('google places autocomplete: ' + responseJSON.error_message);
           }
         } else {
           // console.warn("google places autocomplete: request could not be completed or has been aborted");
@@ -479,11 +476,7 @@ export default class GooglePlacesAutocomplete extends Component {
             }
           }
           if (typeof responseJSON.error_message !== 'undefined') {
-            if(!this.props.onFail)
-              console.warn('google places autocomplete: ' + responseJSON.error_message);
-            else{
-              this.props.onFail(responseJSON.error_message)
-            }
+            console.warn('google places autocomplete: ' + responseJSON.error_message);
           }
         } else {
           // console.warn("google places autocomplete: request could not be completed or has been aborted");
@@ -570,12 +563,13 @@ export default class GooglePlacesAutocomplete extends Component {
   _renderRow = (rowData = {}, sectionID, rowID) => {
     return (
       <ScrollView
-        style={{ flex: 1 }}
+        style={{ flex: 1, flexDirection:'row' }}
         scrollEnabled={this.props.isRowScrollable}
         keyboardShouldPersistTaps={this.props.keyboardShouldPersistTaps}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
+        <Image  style= {{marginTop:10, marginRight:7}} source ={pin_icon}/>
         <TouchableHighlight
           style={{ width: WINDOW.width }}
           onPress={() => this._onPress(rowData)}
@@ -683,7 +677,6 @@ export default class GooglePlacesAutocomplete extends Component {
   render() {
     let {
       onFocus,
-      clearButtonMode,
       ...userProps
     } = this.props.textInputProps;
     return (
@@ -707,11 +700,8 @@ export default class GooglePlacesAutocomplete extends Component {
               onSubmitEditing={this.props.onSubmitEditing}
               placeholderTextColor={this.props.placeholderTextColor}
               onFocus={onFocus ? () => {this._onFocus(); onFocus()} : this._onFocus}
-              onBlur={this._onBlur}
+              clearButtonMode="while-editing"
               underlineColorAndroid={this.props.underlineColorAndroid}
-              clearButtonMode={
-                clearButtonMode ? clearButtonMode : "while-editing"
-              }
               { ...userProps }
               onChangeText={this._handleChangeText}
             />
