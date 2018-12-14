@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import Qs from 'qs';
 import debounce from 'lodash.debounce';
-import { pin_icon } from '@constants/images';
+import { pin_icon } from './Assets/Locationpin.png';
 
 const WINDOW = Dimensions.get('window');
 
