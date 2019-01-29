@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import Qs from 'qs';
 import debounce from 'lodash.debounce';
-import { pin_icon } from './images/Locationpin.png';
+import scale, { verticalScale } from "../../src/helper/scale";
 
 const WINDOW = Dimensions.get('window');
 
@@ -55,7 +55,6 @@ const defaultStyles = {
   powered: {},
   listView: {},
   row: {
-    padding: 13,
     height: 44,
     flexDirection: 'row',
   },
@@ -569,11 +568,11 @@ export default class GooglePlacesAutocomplete extends Component {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
-        <Image  style= {{marginTop:10, marginRight:7}} source ={pin_icon}/>
+        <Image  style= {{marginTop:10, marginRight:7, width:scale(22), height:verticalScale(36)}} source ={require('./Assets/Locationpin.png')}/>
         <TouchableHighlight
           style={{ width: WINDOW.width }}
           onPress={() => this._onPress(rowData)}
-          underlayColor={this.props.listUnderlayColor || "#c8c7cc"}
+          //underlayColor={this.props.listUnderlayColor || "#c8c7cc"}
         >
           <View style={[this.props.suppressDefaultStyles ? {} : defaultStyles.row, this.props.styles.row, rowData.isPredefinedPlace ? this.props.styles.specialItemRow : {}]}>
             {this._renderRowData(rowData)}
