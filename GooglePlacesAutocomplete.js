@@ -568,7 +568,7 @@ export default class GooglePlacesAutocomplete extends Component {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
-        <Image  style= {{marginTop:10, marginRight:7, width:scale(22), height:verticalScale(36)}} source ={require('./Assets/Locationpin.png')}/>
+        <Image resizeMode='contain' style= {{marginTop:10, marginRight:7, width:scale(22), height:verticalScale(36)}} source ={require('./Assets/Locationpin.png')}/>
         <TouchableHighlight
           style={{ width: WINDOW.width }}
           onPress={() => this._onPress(rowData)}
