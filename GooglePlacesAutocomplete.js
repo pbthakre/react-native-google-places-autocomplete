@@ -7,7 +7,6 @@ import {
   ScrollView,
   Image,
   Text,
-  StyleSheet,
   Dimensions,
   TouchableHighlight,
   Platform,
@@ -55,12 +54,14 @@ const defaultStyles = {
   powered: {},
   listView: {},
   row: {
-    height: 44,
+    //height: 44,
+    height:60,
     flexDirection: 'row',
   },
   separator: {
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: '#c8c7cc',
+   // height: StyleSheet.hairlineWidth,
+   height: 0,
+   backgroundColor: '#c8c7cc',
   },
   description: {},
   loader: {
@@ -526,25 +527,39 @@ export default class GooglePlacesAutocomplete extends Component {
   }
 
   _renderRowData = (rowData) => {
-    if (this.props.renderRow) {
+     if (this.props.renderRow) {
       return this.props.renderRow(rowData);
     }
-
     return (
-      <Text style={[{flex: 1}, this.props.suppressDefaultStyles ? {} : defaultStyles.description, this.props.styles.description, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
+      <View style={{alignSelf : 'stretch', flex:1}}>
+        <Text style={[ {alignContent : 'flex-start', fontSize : scale(16)},this.props.suppressDefaultStyles ? {} : defaultStyles.description, this.props.styles.description, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
+          numberOfLines={this.props.numberOfLines}
+        >
+          {this._renderDescription(rowData, 'first')}
+        </Text>
+        <Text style={[ {fontSize : scale(14)},this.props.suppressDefaultStyles ? {} : defaultStyles.description, this.props.styles.description, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
         numberOfLines={this.props.numberOfLines}
       >
-        {this._renderDescription(rowData)}
-      </Text>
+         {this._renderDescription(rowData, 'last')}
+  </Text>
+    </View>
     );
   }
 
-  _renderDescription = (rowData) => {
+  _renderDescription = (rowData, text) => {
     if (this.props.renderDescription) {
       return this.props.renderDescription(rowData);
     }
-
-    return rowData.description || rowData.formatted_address || rowData.name;
+    address = rowData.description || rowData.formatted_address || rowData.name;
+    firstAddress = address.substring(0,address.indexOf(","));
+    lastAddress = address.substring(address.indexOf(',')+1).trim()
+    
+    if(text=='first'){
+     return firstAddress
+    }else if(text=='last'){
+      return lastAddress
+    }else
+     return rowData.description || rowData.formatted_address || rowData.name;
   }
 
   _renderLoader = (rowData) => {
@@ -560,7 +575,7 @@ export default class GooglePlacesAutocomplete extends Component {
   }
 
   _renderRow = (rowData = {}, sectionID, rowID) => {
-    return (
+   return (
       <ScrollView
         style={{ flex: 1, flexDirection:'row' }}
         scrollEnabled={this.props.isRowScrollable}
@@ -570,7 +585,7 @@ export default class GooglePlacesAutocomplete extends Component {
         showsVerticalScrollIndicator={false}>
         <Image resizeMode='contain' style= {{marginTop:10, marginRight:7, width:scale(22), height:verticalScale(36)}} source ={require('./Assets/Locationpin.png')}/>
         <TouchableHighlight
-          style={{ width: WINDOW.width }}
+          style={{ width: WINDOW.width}}
           onPress={() => this._onPress(rowData)}
           //underlayColor={this.props.listUnderlayColor || "#c8c7cc"}
         >
