@@ -55,7 +55,7 @@ const defaultStyles = {
   listView: {},
   row: {
     //height: 44,
-    height:60,
+   // height:60,
     flexDirection: 'row',
   },
   separator: {
@@ -533,12 +533,12 @@ export default class GooglePlacesAutocomplete extends Component {
     return (
       <View style={{alignSelf : 'stretch', flex:1}}>
         <Text style={[ {alignContent : 'flex-start', fontSize : scale(16)},this.props.suppressDefaultStyles ? {} : defaultStyles.description, this.props.styles.description, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
-          numberOfLines={this.props.numberOfLines}
+         numberOfLines={2}
         >
           {this._renderDescription(rowData, 'first')}
         </Text>
         <Text style={[ {fontSize : scale(14)},this.props.suppressDefaultStyles ? {} : defaultStyles.description, this.props.styles.description, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
-        numberOfLines={this.props.numberOfLines}
+        numberOfLines={2} ellipsizeMode={'tail'}
       >
          {this._renderDescription(rowData, 'last')}
   </Text>
