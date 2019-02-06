@@ -590,7 +590,7 @@ export default class GooglePlacesAutocomplete extends Component {
         >
           <View style={[this.props.suppressDefaultStyles ? {} : defaultStyles.row, this.props.styles.row, rowData.isPredefinedPlace ? this.props.styles.specialItemRow : {}]}>
             {this._renderRowData(rowData)}
-            {this._renderLoader(rowData)}
+            {/* {this._renderLoader(rowData)} */}
           </View>
         </TouchableHighlight>
       </View>
