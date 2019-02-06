@@ -577,15 +577,16 @@ export default class GooglePlacesAutocomplete extends Component {
   _renderRow = (rowData = {}, sectionID, rowID) => {
    return (
       <ScrollView
-        style={{ flex: 1, flexDirection:'row' }}
+        style={{ flex: 1, flexDirection:'row', }}
         scrollEnabled={this.props.isRowScrollable}
+        contentContainerStyle={{alignItems:'center' }}
         keyboardShouldPersistTaps={this.props.keyboardShouldPersistTaps}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
-        <Image resizeMode='contain' style= {{marginTop:10, marginRight:7, width:scale(22), height:verticalScale(36)}} source ={require('./Assets/Locationpin.png')}/>
+        <Image resizeMode='contain' style= {{ marginTop:10, marginRight:7, width:scale(22), height:verticalScale(36)}} source ={require('./Assets/Locationpin.png')}/>
         <TouchableHighlight
-          style={{ width: WINDOW.width}}
+          // style={{ width: WINDOW.width}}
           onPress={() => this._onPress(rowData)}
           //underlayColor={this.props.listUnderlayColor || "#c8c7cc"}
         >
