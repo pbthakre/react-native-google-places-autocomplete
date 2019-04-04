@@ -11,7 +11,8 @@ import {
   TouchableHighlight,
   Platform,
   ActivityIndicator,
-  PixelRatio
+  PixelRatio,
+  TouchableOpacity
 } from 'react-native';
 import Qs from 'qs';
 import debounce from 'lodash.debounce';
@@ -533,19 +534,20 @@ export default class GooglePlacesAutocomplete extends Component {
       return this.props.renderRow(rowData);
     }
     return (
-      <View style={{overflow:'hidden', alignItems:'center'}}>
-      <View style={{marginRight:10,}}>
-       {firstLine !== ''? <Text style={[ { fontSize : scale(16)},this.props.suppressDefaultStyles ? {} : defaultStyles.description, this.props.styles.description, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
+      <View style={{flex:1}}>
+        <View style={{marginRight:10,}}>
+       {firstLine !== ''? <Text style={[ { fontSize : scale(16),flexWrap:'wrap',flex:1},this.props.suppressDefaultStyles ? {} : defaultStyles.description, this.props.styles.description, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
          numberOfLines={2}>
           {firstLine}
         </Text>: null }
-    {secondLine !== '' ?<Text style={[ {fontSize : scale(14)},this.props.suppressDefaultStyles ? {} : defaultStyles.description, this.props.styles.description, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
-        numberOfLines={4} ellipsizeMode={'tail'}
-      >
+        <View style={{flex: 1}}>
+    {secondLine !== '' ?<Text style={[ {fontSize : scale(14),flexWrap:'wrap',flex:1},  this.props.suppressDefaultStyles ? {} : defaultStyles.description, this.props.styles.description, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
+       numberOfLines={4} ellipsizeMode={'tail'}>
          {secondLine}
   </Text>: null }
   </View>
-    </View>
+  </View>
+  </View>
     );
   }
 
@@ -580,11 +582,11 @@ export default class GooglePlacesAutocomplete extends Component {
   _renderRow = (rowData = {}, sectionID, rowID) => {
    return (
       <View
-        style={{ flex: 1, flexDirection:'row', alignItems:'center'}}
+        style={{ flexDirection:'row', alignItems:'center', marginVertical:10, overflow:'hidden'}}
         >
-        <Image resizeMode='contain' style= {{ marginTop:10, marginRight:7, width:scale(22), height:verticalScale(36)}} source ={require('./Assets/Locationpin.png')}/>
-        <TouchableHighlight
-          // style={{ width: WINDOW.width}}
+        <Image resizeMode='contain' style= {{ marginTop:10,}} source ={require('./Assets/Locationpin.png')}/>
+        <TouchableOpacity
+          style={{ width: 0, flexGrow:1, flex:1, marginLeft:10}}
           onPress={() => this._onPress(rowData)}
           //underlayColor={this.props.listUnderlayColor || "#c8c7cc"}
         >
@@ -592,7 +594,7 @@ export default class GooglePlacesAutocomplete extends Component {
             {this._renderRowData(rowData)}
             {/* {this._renderLoader(rowData)} */}
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     );
   }
